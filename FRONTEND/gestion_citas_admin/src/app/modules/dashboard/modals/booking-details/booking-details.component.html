@@ -1,0 +1,77 @@
+<div class="p-4">
+  <h2
+    mat-dialog-title
+    class="text-lg font-semibold text-indigo-700 text-center"
+  >
+    Detalles de la Cita
+  </h2>
+
+  <mat-dialog-content class="p-4">
+    <div class="grid grid-cols-2 gap-4">
+      <p><strong>ID:</strong> {{ data.ID_CITA }}</p>
+      <p>
+        <strong>Fecha:</strong>
+        {{ data.FECHA_RESERVA | date : "dd/MM/yyyy" }}
+      </p>
+      <p><strong>Estado:</strong> {{ data.ESTADO }}</p>
+      <p><strong>Salón:</strong> {{ data.NOMBRE_DEL_SALON }}</p>
+      <p><strong>Razón Social:</strong> {{ data.RAZON_SOCIAL }}</p>
+      <p><strong>RUC:</strong> {{ data.RUC }}</p>
+      <p><strong>Banco:</strong> {{ data.NOMBRE_DEL_BANCO }}</p>
+      <p><strong>Número de Cuenta:</strong> {{ data.NUMERO_DE_CUENTA }}</p>
+      <p><strong>CCI:</strong> {{ data.CODIGO_INTERBANCARIO }}</p>
+      <p>
+        <strong>Nombre de la Cuenta:</strong> {{ data.NOMBRE_DE_LA_CUENTA }}
+      </p>
+      <p><strong>Nombre:</strong> {{ data.NOMBRE_USUARIO }}</p>
+      <p><strong>email salón:</strong> {{ data.EMAIL_BUSINESS }}</p>
+      <p><strong>email cliente:</strong> {{ data.EMAIL_CLIENTE }}</p>
+
+      <p><strong>Izipay:</strong> {{ data.PAYMENT_TRANSACTION_ID }}</p>
+      <p>
+        <strong>Número de Teléfono:</strong> {{ data.CODIGO_PAIS
+        }}{{ data.NUMERO_TELEFONO }}
+      </p>
+      <p><strong>Wallet</strong> {{ data.MONTO_WALLET }}</p>
+      <p><strong>Tarjeta</strong> {{ data.MONTO_TARJETA }}</p>
+      <p>
+        <strong>Tipo Pago</strong>
+        {{
+          data.MONTO_WALLET > 0 && data.MONTO_TARJETA > 0
+            ? "AMBOS"
+            : data.MONTO_WALLET > 0
+            ? "WALLET"
+            : data.MONTO_TARJETA > 0
+            ? "TARJETA"
+            : "NINGUNO"
+        }}
+      </p>
+
+      <!-- 🔥 Sección para mostrar las imágenes -->
+      <div
+        *ngIf="data.DOCUMENTOS_IMAGENES && data.DOCUMENTOS_IMAGENES.length > 0"
+      >
+        <p><strong>Documentos:</strong></p>
+        <div class="flex flex-row gap-4">
+          <img
+            *ngFor="let img of data.DOCUMENTOS_IMAGENES"
+            [src]="'https://media.bukiglobal.com/users/' + img"
+            alt="Documento"
+            class="w-24 h-24 object-cover rounded-md border shadow-md cursor-pointer transition-transform"
+            (click)="openImage('https://media.bukiglobal.com/users/' + img)"
+          />
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="p-4 border-t border-gray-200">
+    <button
+      mat-button
+      (click)="close()"
+      class="px-4 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition"
+    >
+      Cerrar
+    </button>
+  </mat-dialog-actions>
+</div>

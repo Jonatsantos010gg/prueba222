@@ -1,0 +1,238 @@
+<div class="max-w-8xl mx-auto p-10 space-y-6 bg-white rounded-xl">
+  <!-- Contenedor principal -->
+  <div class="w-full md:w-2/3 ml-auto p-4 m-6 rounded-lg bg-white">
+    <form class="flex flex-col md:flex-row gap-4 items-center">
+      <!-- Filtro de Búsqueda -->
+      <mat-form-field class="w-full md:w-2/4 mx-4">
+        <mat-label>Buscar</mat-label>
+        <mat-icon matPrefix>search</mat-icon>
+        <input
+          matInput
+          [formControl]="searchFormControl"
+          [errorStateMatcher]="matcher"
+          (keyup)="applyFilter($event)"
+          placeholder="Filtrar citas"
+        />
+      </mat-form-field>
+
+      <!-- Filtro de Rango de Fechas -->
+      <mat-form-field class="w-full md:w-2/4 mx-4">
+        <mat-label> Rango Fecha</mat-label>
+        <mat-date-range-input [formGroup]="dateRange" [rangePicker]="picker">
+          <input matStartDate formControlName="start" placeholder="Inicio" />
+          <input matEndDate formControlName="end" placeholder="Fin" />
+        </mat-date-range-input>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      <!-- Botón de Filtrar -->
+      <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        style="background-color: #8174b2; padding: 30px 40px; font-size: 15px"
+        (click)="applyDateFilter()"
+      >
+        Filtrar
+      </button>
+      <!-- Botón de exportar -->
+      <button
+        mat-flat-button
+        class="row"
+        type="button"
+        (click)="exportarExcel()"
+        style="
+          background-color: #8174b2;
+          padding: 30px 40px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 15px;
+        "
+      >
+        <img
+          src="assets/excel.png"
+          alt="excel icon"
+          width="40"
+          height="40"
+          style="filter: brightness(0) invert(1)"
+        />
+      </button>
+    </form>
+  </div>
+  <div class="overflow-auto w-full">
+    <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8"
+      style="border-radius: 10px !important"
+    >
+      <!-- Columna de selección -->
+      <ng-container matColumnDef="SELECCION">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox
+            style="
+              --mdc-checkbox-unselected-icon-color: #b274a5 !important;
+              --mdc-checkbox-selected-icon-color: #b274a5 !important;
+              --mdc-checkbox-selected-hover-icon-color: #000000 !important;
+              --mdc-checkbox-selected-checkmark-color: #ffffff;
+              --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+              --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+              --mat-sys-primary: #b274a5 !important;
+              --mat-sys-on-primary: #ffffff !important;
+              --mat-sys-on-surface: #b274a5 !important;
+              --mat-sys-on-surface-variant: #b274a5 !important;
+            "
+            (change)="toggleAllRows()"
+            [checked]="isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"
+            [aria-label]="checkboxLabel()"
+          >
+          </mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox
+            style="
+              --mdc-checkbox-unselected-icon-color: #b274a5 !important;
+              --mdc-checkbox-selected-icon-color: #b274a5 !important;
+              --mdc-checkbox-selected-hover-icon-color: #000000 !important;
+              --mdc-checkbox-selected-checkmark-color: #ffffff;
+              --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+              --mdc-checkbox-unselected-hover-icon-color: #ffffff;
+              --mat-sys-primary: #b274a5 !important;
+              --mat-sys-on-primary: #ffffff !important;
+              --mat-sys-on-surface: #b274a5 !important;
+              --mat-sys-on-surface-variant: #b274a5 !important;
+            "
+            (click)="$event.stopPropagation()"
+            (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)"
+            [aria-label]="checkboxLabel(row)"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <!-- ID -->
+      <ng-container matColumnDef="ID_CITA">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.ID_CITA }}</td>
+      </ng-container>
+      <!-- Columna para imágenes -->
+      <ng-container matColumnDef="DOCUMENTOS_IMAGENES" style="display: none">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let cita">
+          <div class="flex items-center gap-1"></div>
+        </td>
+      </ng-container>
+
+      <!-- Fecha Reserva -->
+      <ng-container matColumnDef="FECHA_RESERVA">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Reserva</th>
+        <td mat-cell *matCellDef="let cita">
+          {{ cita.FECHA_RESERVA | date : "dd/MM/yyyy " }}
+        </td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="ESTADO">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.ESTADO }}</td>
+      </ng-container>
+
+      <!-- Salón -->
+      <ng-container matColumnDef="NOMBRE_DEL_SALON">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Salón</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.NOMBRE_DEL_SALON }}</td>
+      </ng-container>
+      <!-- Salón -->
+      <ng-container matColumnDef="NOMBRE_USUARIO">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.NOMBRE_USUARIO }}</td>
+      </ng-container>
+
+      <!-- Razón Social -->
+      <ng-container matColumnDef="RAZON_SOCIAL">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Razón Social</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.RAZON_SOCIAL }}</td>
+      </ng-container>
+
+      <!-- RUC -->
+      <ng-container matColumnDef="RUC">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>RUC</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.RUC }}</td>
+      </ng-container>
+
+      <!-- Banco -->
+      <ng-container matColumnDef="NOMBRE_DEL_BANCO">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Banco</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.NOMBRE_DEL_BANCO }}</td>
+      </ng-container>
+
+      <!-- Acciones -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef>Acciones</th>
+        <td mat-cell *matCellDef="let cita">
+          <button mat-button color="primary">Detalles</button>
+        </td>
+      </ng-container>
+      <!-- Nombre cuenta -->
+      <ng-container matColumnDef="ID_IZIPAY">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Izipay</th>
+        <td mat-cell *matCellDef="let cita">
+          {{ cita.PAYMENT_TRANSACTION_ID }}
+        </td>
+      </ng-container>
+
+      <!-- numero de cuenta -->
+      <ng-container matColumnDef="NUMERO_DE_CUENTA">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          Número de cuenta
+        </th>
+        <td mat-cell *matCellDef="let cita">{{ cita.NUMERO_DE_CUENTA }}</td>
+      </ng-container>
+      <!-- email cliente-->
+      <ng-container matColumnDef="EMAIL_CLIENTE">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email cliente</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.EMAIL_CLIENTE }}</td>
+      </ng-container>
+
+      <!-- CCI -->
+      <ng-container matColumnDef="CODIGO_INTERBANCARIO">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>CCI</th>
+        <td mat-cell *matCellDef="let cita">{{ cita.CODIGO_INTERBANCARIO }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="openDetailsModal(row)"
+        style="cursor: pointer"
+      ></tr>
+    </table>
+  </div>
+  <div class="w-full overflow-auto">
+    <div
+      style="background-color: #8174b2"
+      class="min-w-[1200px] flex flex-col md:flex-row justify-between items-center px-4 py-2"
+    >
+      <!-- Contador de seleccionados -->
+      <span class="text-base font-medium text-white mb-2 md:mb-0">
+        Selected: {{ selection.selected.length }}
+      </span>
+
+      <!-- Paginador -->
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons
+        ><span class="text-base font-medium text-gray-700 mb-2 md:mb-0">
+          Seleccionados: {{ selection.selected.length }}
+        </span></mat-paginator
+      >
+    </div>
+  </div>
+</div>

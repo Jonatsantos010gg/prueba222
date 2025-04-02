@@ -1,0 +1,59 @@
+<div class="flex min-h-screen">
+  <!-- Sección de la imagen (oculta en móviles) -->
+  <div
+    class="hidden lg:flex w-1/2 bg-cover bg-center"
+    style="background-image: url('/assets/login-bg.png')"
+  >
+    <div class="p-10 text-white bg-opacity-50 w-full h-full flex items-center">
+      <h2 class="text-3xl font-semibold">.</h2>
+    </div>
+  </div>
+
+  <!-- Sección del formulario -->
+  <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
+    <div class="max-w-md w-full">
+      <h2 class="text-2xl font-bold text-gray-800 font-quicksand">
+        Inicio de sesión
+      </h2>
+      <p class="text-gray-500 text-sm mb-4">
+        Ingrese su correo y contraseña para acceder al sistema
+      </p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <!-- Correo Electrónico -->
+        <label class="block">
+          <span class="text-gray-700">Correo electrónico</span>
+          <input
+            type="email"
+            formControlName="Email"
+            class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring focus:ring-purple-300"
+            placeholder="Ingresar correo"
+            required
+          />
+        </label>
+
+        <!-- Contraseña -->
+        <label class="block">
+          <span class="text-gray-700">Contraseña</span>
+          <input
+            type="password"
+            formControlName="password"
+            class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring focus:ring-purple-300"
+            placeholder="Ingresar contraseña"
+            required
+          />
+        </label>
+
+        <!-- Botón de Login -->
+        <button
+          type="submit"
+          style="background-color: #8174b2"
+          class="w-full bg-[#8174B2] text-white py-2 rounded-lg hover:bg-[#6D5EA3] transition"
+          [disabled]="loginForm.invalid"
+        >
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

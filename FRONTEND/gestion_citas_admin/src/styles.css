@@ -1,0 +1,204 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@use "@angular/material" as mat;
+
+html,
+body {
+  height: 100%;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --mdc-theme-primary: #8174b2; /* Color principal */
+  --mdc-theme-on-primary: #ffffff !important; /* Texto sobre botones */
+  --mdc-theme-secondary: #8174b2 !important; /* Color secundario */
+  --mdc-theme-background: #f5f5f5 !important; /* Fondo general */
+  --mdc-table-header-bg: var(
+    --mdc-theme-primary !important
+  ); /* Fondo de encabezado de tabla */
+  --mdc-table-header-text: #ffffff !important; /* Texto del encabezado */
+  --mdc-table-row-bg: #ffffff !important; /* Fondo de filas */
+  --mdc-table-row-hover: rgba(0, 0, 0, 0.05) !important; /* Efecto hover */
+  --mdc-table-text: #333 !important; /* Texto de la tabla */
+  --mdc-theme-surface: #ffffff !important; /* Fondo de elementos */
+}
+/* Cambia el fondo del input */
+.mat-mdc-form-field .mdc-text-field {
+  background-color: #ffffff !important; /* ✅ Pon el color que quieras */
+}
+
+/* Cambia el fondo cuando está en "filled" (relleno) */
+.mat-mdc-form-field.mat-mdc-form-field-type-mat-input.mat-form-field-appearance-fill
+  .mat-mdc-text-field {
+  background-color: #f5f5f5 !important; /* ✅ Cambia este color */
+}
+
+/* Cambia el color del borde del input */
+.mat-mdc-text-field--outlined {
+  border-color: #8174b290 !important; /* ✅ Color del borde */
+}
+
+.mi-boton-personalizado {
+  background-color: var(--mdc-theme-primary) !important;
+  color: var(--mdc-theme-on-primary) !important;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+/* 🔥 Cambiar el color de TODOS los botones */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-icon-button {
+  background-color: var(--mdc-theme-primary) !important;
+  color: var(--mdc-theme-on-primary) !important;
+}
+/* ✅ Cambia el color del encabezado de la tabla */
+.mat-mdc-table .mat-mdc-header-row {
+  background-color: var(--mdc-table-header-bg) !important;
+  color: var(--mdc-table-header-text) !important;
+}
+
+/* ✅ Cambia el color de las filas de la tabla */
+.mat-mdc-table .mat-mdc-row {
+  background-color: var(--mdc-table-row-bg) !important;
+  color: var(--mdc-table-text) !important;
+}
+
+/* ✅ Color cuando pasas el mouse sobre una fila */
+.mat-mdc-table .mat-mdc-row:hover {
+  background-color: var(--mdc-table-row-hover) !important;
+}
+
+/* ✅ Cambia el color del borde de las celdas */
+.mat-mdc-cell {
+  border-color: rgba(0, 0, 0, 0.12) !important;
+}
+
+/* ✅ Color de los filtros de la tabla */
+.mat-mdc-form-field {
+  --mdc-text-field-fill-color: var(--mdc-theme-background);
+  --mdc-text-field-ink-color: var(--mdc-table-text);
+}
+
+/* 🔥 Cambia el color de los botones */
+.mat-mdc-button,
+.mat-mdc-raised-button,
+.mat-mdc-icon-button {
+  background-color: var(--mdc-theme-primary) !important;
+  color: var(--mdc-theme-on-primary) !important;
+}
+
+/* 🔥 Cambia el color del encabezado de la tabla */
+.mat-mdc-table .mat-mdc-header-row {
+  background-color: var(--mdc-theme-primary) !important;
+  color: white !important;
+}
+
+/* 🔥 Cambia el color del input y del Date Picker */
+.mat-mdc-form-field {
+  --mdc-text-field-fill-color: var(--mdc-theme-surface);
+  --mdc-text-field-ink-color: var(--mdc-theme-primary);
+}
+
+/* 🔥 Cambia el fondo del Date Picker */
+.mat-mdc-datepicker-content {
+  background-color: var(--mdc-theme-background) !important;
+}
+.full-screen-dialog .mat-dialog-container {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔥 Fondo de la paginación */
+.mat-mdc-paginator {
+  background-color: var(
+    --mdc-theme-primary
+  ) !important; /* ✅ Color principal */
+  color: white !important; /* ✅ Texto en blanco */
+}
+
+/* 🔥 Cambiar color de los íconos en los botones de paginación */
+.mat-mdc-paginator-navigation {
+  color: white !important; /* ✅ Íconos en blanco */
+}
+
+/* 🔥 Estilizar el dropdown de "Items per page" */
+.mat-mdc-paginator-page-size {
+  background-color: transparent !important; /* ✅ Fondo transparente */
+  color: white !important; /* ✅ Texto en blanco */
+  border: none !important; /* ❌ Quita el borde rojo/rosa feo */
+}
+
+/* 🔥 Cambiar color del dropdown al abrirse */
+.mat-mdc-select-panel {
+  background-color: var(
+    --mdc-theme-primary
+  ) !important; /* ✅ Fondo acorde al tema */
+  color: white !important;
+}
+
+/* 🔥 Cambiar color del texto de "Items per page" */
+.mat-mdc-paginator-page-size-label,
+.mat-mdc-paginator-range-label {
+  color: white !important;
+}
+/* 🔥 Estilo del desplegable del select */
+.mat-mdc-select-panel {
+  background-color: var(
+    --mdc-theme-primary
+  ) !important; /* ✅ Fondo acorde al tema */
+  color: white !important;
+}
+
+/* 🔥 Cambiar el color del texto en las opciones */
+.mat-mdc-option {
+  color: white !important; /* ✅ Texto en blanco */
+}
+
+/* 🔥 Cambiar el hover en las opciones del desplegable */
+.mat-mdc-option:hover,
+.mat-mdc-option.mat-mdc-option-active {
+  background-color: rgba(
+    255,
+    255,
+    255,
+    0.2
+  ) !important; /* ✅ Un hover más limpio */
+}
+
+/* 🔥 Arreglar el borde rojo feo del select */
+.mat-mdc-select {
+  border: none !important;
+}
+.mat.checkbox-overrides {
+  --mdc-checkbox-selected-icon-color: #000000 !important;
+  --mdc-checkbox-selected-hover-icon-color: #000000 !important;
+  --mdc-checkbox-selected-checkmark-color: #ffffff !important;
+  --mdc-checkbox-unselected-hover-icon-color: #ffffff !important;
+  --mdc-checkbox-selected-hover-state-layer-color: #1e00ff !important;
+}
